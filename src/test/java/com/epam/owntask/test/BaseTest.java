@@ -12,18 +12,12 @@ import org.testng.annotations.BeforeMethod;
 public abstract class BaseTest {
     protected MainPage mainPage;
     protected LoginPage loginPage;
-    protected LogoutPage logoutPage;
-    protected WriteMessagePage writeMessagePage;
-    protected MarkMessageAsSpamPage markMessageAsSpamPage;
     protected WebDriver driver;
 
     @BeforeMethod
     public void setUp() throws Exception {
         this.driver = FactoryDriver.getInstance();
         this.loginPage = new LoginPage(driver);
-        this.logoutPage = new LogoutPage(driver);
-        this.writeMessagePage = new WriteMessagePage(driver);
-        this.markMessageAsSpamPage = new MarkMessageAsSpamPage(driver);
     }
 
     @AfterMethod

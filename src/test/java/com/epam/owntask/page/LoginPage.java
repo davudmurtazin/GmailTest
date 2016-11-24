@@ -9,33 +9,35 @@ import org.openqa.selenium.support.FindBy;
  * Created by Davud_Murtazin on 11/20/2016.
  */
 public class LoginPage extends AbstractPage{
-    public LoginPage(WebDriver driver) {
-        super(driver);
-    }
-
+    //user name
     @FindBy(css = "#Email")
     private WebElement loginNameField;
     @FindBy(css = "#next")
     private WebElement loginEnterButton;
 
+    //password
     @FindBy(css = "#Passwd")
     private WebElement passwordField;
     @FindBy(css = "#signIn")
     private WebElement submitButton;
 
+    public LoginPage(WebDriver driver) {
+        super(driver);
+    }
 
-
-    public void authorization(String login, String password) throws InterruptedException {
+    public MainPage authorization(String login, String password) throws InterruptedException {
+        log.info("---Authorization---");
         loginNameField.sendKeys(login);
         loginEnterButton.click();
         Thread.sleep(1000);
         passwordField.sendKeys(password);
         submitButton.click();
-        Thread.sleep(6000);
+        Thread.sleep(4000);
+        return new MainPage(driver);
     }
 
     public void openLoginPage(){
-        log.info("opening login page");
+        log.info("---Opening login page---");
         driver.get(PropertyProvider.getProperty("url"));
     }
 }
