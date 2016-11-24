@@ -17,13 +17,13 @@ public class LoginPageSteps extends AbstractSteps{
     }
 
     public LoginPageSteps openLoginPage() {
-        log.info("opening login page");
+        log.info("Opening login page");
         driver.get(PropertyProvider.getProperty("url"));
         return this;
     }
 
     public MainPageSteps authorization(String login, String password) {
-        log.info("try to login in");
+        log.info("Authorization");
         try {
             loginPage.authorization(login, password);
         } catch (InterruptedException e) {

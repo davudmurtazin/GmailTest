@@ -18,6 +18,7 @@ public class MainPageSteps extends AbstractSteps{
     }
 
     public MainPageSteps writeMessage(String loginUser2, String message){
+        log.info("---Write message to user2---");
         if(loginUser2.isEmpty() || message.isEmpty() ){
             new StepsException("Wrong params!");
         }
@@ -30,6 +31,7 @@ public class MainPageSteps extends AbstractSteps{
     }
 
     public MainPageSteps markMessageAsSpam(){
+        log.info("---Mark message as spam---");
         try {
             mainPage.markMessageAsSpam();
         } catch (InterruptedException e) {
@@ -39,6 +41,7 @@ public class MainPageSteps extends AbstractSteps{
     }
 
     public SpamPageSteps enterToSpamPage(String pageTitle){
+        log.info("Enter to page by title");
         if(pageTitle.isEmpty()){
             new StepsException("Wrong params!");
         }
@@ -51,11 +54,13 @@ public class MainPageSteps extends AbstractSteps{
     }
 
     public LoginPageSteps logOutAfterLogInOneUser(){
+        log.info("Log out after log in one user");
         mainPage.logOutAfterLogInOneUser();
         return new LoginPageSteps(driver);
     }
 
     public LoginPageSteps logOutAfterLogInSeveralUsers(){
+        log.info("Log out after log in several users");
         mainPage.logOutAfterLogInSeveralUsers();
         return new LoginPageSteps(driver);
     }

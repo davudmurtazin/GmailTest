@@ -26,7 +26,6 @@ public class LoginPage extends AbstractPage{
     }
 
     public MainPage authorization(String login, String password) throws InterruptedException {
-        log.info("---Authorization---");
         loginNameField.sendKeys(login);
         loginEnterButton.click();
         Thread.sleep(1000);
@@ -37,7 +36,6 @@ public class LoginPage extends AbstractPage{
     }
 
     public void openLoginPage(){
-        log.info("---Opening login page---");
         driver.get(PropertyProvider.getProperty("url"));
     }
 }

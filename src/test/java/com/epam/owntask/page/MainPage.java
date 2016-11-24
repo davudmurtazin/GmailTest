@@ -50,14 +50,12 @@ public class MainPage extends AbstractPage{
     }
 
     public void enterToSpamPage(String title) throws InterruptedException {
-        log.info("---Enter to page by title---");
         inputSpamPageToSearch.sendKeys(title);
         submitSpamPage.click();
         Thread.sleep(1000);
     }
 
     public void markMessageAsSpam() throws InterruptedException {
-        log.info("---Mark message as spam---");
         Thread.sleep(4000);
         checkBoxSelectMessage.click();
         try {
@@ -71,7 +69,6 @@ public class MainPage extends AbstractPage{
     }
 
     public void writeMessage(String login, String message) throws InterruptedException {
-        log.info("---Write message to user2---");
         buttonWriteNewMessage.click();
         Thread.sleep(1000);
         inputLoginToSend.sendKeys(login);

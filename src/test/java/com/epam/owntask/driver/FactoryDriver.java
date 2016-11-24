@@ -29,15 +29,15 @@ public class FactoryDriver {
         switch (type) {
             case CHROME:
                 driver = createChromeDriver();
-                log.info("chrome driver created");
+                log.info("Chrome driver created");
                 break;
             case FIREFOX:
                 driver = createFirefoxDriver();
-                log.info("firefox driver created");
+                log.info("Firefox driver created");
                 break;
             default:
                 driver = createFirefoxDriver();
-                log.info("firefox driver created");
+                log.info("Firefox driver created");
 
         }
 
@@ -57,7 +57,7 @@ public class FactoryDriver {
     public static void closeDriver() {
         driver.quit();
         driver = null;
-        log.info("driver has been closed");
+        log.info("Driver has been closed");
     }
 
 
