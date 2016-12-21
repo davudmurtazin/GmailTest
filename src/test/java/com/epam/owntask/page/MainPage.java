@@ -1,7 +1,8 @@
 package com.epam.owntask.page;
 
 import com.epam.owntask.step.LoginPageSteps;
-import com.epam.owntask.step.exception.StepsException;
+import com.epam.owntask.util.ThreadSleep;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -13,37 +14,57 @@ public class MainPage extends AbstractPage{
     //select message and move it to spam
     @FindBy(xpath = "//table[@class='F cf zt']/tbody/tr[1]/td[2]/div/div")
     private WebElement checkBoxSelectMessage;
+
     @FindBy(xpath = "//div[@class = 'G-tF']/div[3]/div[1]")
     private WebElement selectMoveTo;
+
     @FindBy(xpath = "//div[contains(@class, 'J-N-Jz') and text()='Спам']")
     private WebElement caseMoveToSpam;
 
-    //enter to page by title
+    //enter to page by title--------------
     @FindBy(xpath = "//input[@id='gbqfq']")
     private WebElement inputSpamPageToSearch;
+
     @FindBy(xpath = "//button[@id='gbqfb']")
     private WebElement submitSpamPage;
 
-    //write message
+    //write message---------------------
     @FindBy(xpath = "//div[@class ='z0']/div")
     private WebElement buttonWriteNewMessage;
+
     @FindBy(xpath="//table[@class='GS']/tbody/tr/td[2]/div/div/textarea")
     private WebElement inputLoginToSend;
+
     @FindBy(xpath="//div[@class='Am Al editable LW-avf']")
     private WebElement inputMessageText;
+
     @FindBy(xpath = "//div[@class='aDh']/table/tbody/tr/td/div/div[2]")
     private WebElement buttonSendMessage;
 
-    // logout
+    // logout---------------------
     @FindBy(xpath = "//a[@class = 'gb_b gb_db gb_R']/span")
     private WebElement iconLogout;
+
     @FindBy(xpath = "//a[text() = 'Выйти']")
     private WebElement buttonLogout;
+
     @FindBy(xpath = "//a[@id='account-chooser-link']")
     private WebElement linkLoginNewUser;
 
     @FindBy(xpath = "//a[@id='account-chooser-add-account']")
     private WebElement buttonNewUser;
+
+    //enter to settings page---------------
+    @FindBy(xpath = "//div[@class='T-I J-J5-Ji ash T-I-ax7 L3']/div[1]")
+    private WebElement iconSettings;
+
+    @FindBy(xpath = "//div[@class='SK AX']/div[8]/div")
+    private WebElement selectSettings;
+
+    //confirm forward--------------------------
+    @FindBy(xpath = "//table[@class='F cf zt']/tbody/tr[1]/td[4]/div[2]/span")
+    private WebElement linkOpenMessage;
+
 
     public MainPage(WebDriver driver) {
         super(driver);
@@ -52,57 +73,42 @@ public class MainPage extends AbstractPage{
     public void enterToSpamPage(String title) throws InterruptedException {
         inputSpamPageToSearch.sendKeys(title);
         submitSpamPage.click();
-        Thread.sleep(1000);
+    }
+
+    public void enterToSettingsPage() throws InterruptedException {
+        iconSettings.click();
+        selectSettings.click();
     }
 
     public void markMessageAsSpam() throws InterruptedException {
-        Thread.sleep(4000);
         checkBoxSelectMessage.click();
-        try {
-            Thread.sleep(1000);
-            selectMoveTo.click();
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            new StepsException(e.getMessage());
-        }
+        wait.waitForElementIsClickable(selectMoveTo).click();
         caseMoveToSpam.click();
     }
 
     public void writeMessage(String login, String message) throws InterruptedException {
         buttonWriteNewMessage.click();
-        Thread.sleep(1000);
         inputLoginToSend.sendKeys(login);
         inputMessageText.sendKeys(message);
         buttonSendMessage.click();
-        Thread.sleep(2000);
     }
 
     public LoginPageSteps logOutAfterLogInOneUser(){
-        try {
-            iconLogout.click();
-            buttonLogout.click();
-            Thread.sleep(1000);
-            linkLoginNewUser.click();
-            Thread.sleep(1000);
-            buttonNewUser.click();
-            Thread.sleep(1500);
-        } catch (InterruptedException e) {
-            new StepsException(e.getMessage());
-        }
+        iconLogout.click();
+        ThreadSleep.waitElement(1000);
+        buttonLogout.click();
+        linkLoginNewUser.click();
+        buttonNewUser.click();
         return new LoginPageSteps(driver);
     }
 
     public LoginPageSteps logOutAfterLogInSeveralUsers(){
-        try {
-            iconLogout.click();
-            Thread.sleep(2000);
-            buttonLogout.click();
-            Thread.sleep(1000);
-            buttonNewUser.click();
-            Thread.sleep(1500);
-        } catch (InterruptedException e) {
-            new StepsException(e.getMessage());
-        }
+        iconLogout.click();
+        ThreadSleep.waitElement(1000);
+        buttonLogout.click();
+        buttonNewUser.click();
         return new LoginPageSteps(driver);
     }
+
+
 }

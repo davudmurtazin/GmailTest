@@ -1,9 +1,6 @@
 package com.epam.owntask.step;
 
-import com.epam.owntask.page.LoginPage;
 import com.epam.owntask.page.MainPage;
-import com.epam.owntask.page.SpamPage;
-import com.epam.owntask.step.exception.StepsException;
 import org.openqa.selenium.WebDriver;
 
 /**
@@ -20,12 +17,12 @@ public class MainPageSteps extends AbstractSteps{
     public MainPageSteps writeMessage(String loginUser2, String message){
         log.info("---Write message to user2---");
         if(loginUser2.isEmpty() || message.isEmpty() ){
-            new StepsException("Wrong params!");
+            log.info("Wrong params!");
         }
         try {
             mainPage.writeMessage(loginUser2,message);
         } catch (InterruptedException e) {
-            new StepsException(e.getMessage());
+            log.info(e.getMessage());
         }
         return this;
     }
@@ -35,7 +32,7 @@ public class MainPageSteps extends AbstractSteps{
         try {
             mainPage.markMessageAsSpam();
         } catch (InterruptedException e) {
-            new StepsException(e.getMessage());
+            log.info(e.getMessage());
         }
         return this;
     }
@@ -43,12 +40,12 @@ public class MainPageSteps extends AbstractSteps{
     public SpamPageSteps enterToSpamPage(String pageTitle){
         log.info("Enter to page by title");
         if(pageTitle.isEmpty()){
-            new StepsException("Wrong params!");
+            log.info("Wrong params!");
         }
         try {
             mainPage.enterToSpamPage(pageTitle);
         } catch (InterruptedException e) {
-            new StepsException(e.getMessage());
+            log.info(e.getMessage());
         }
         return new SpamPageSteps(driver);
     }
@@ -63,5 +60,14 @@ public class MainPageSteps extends AbstractSteps{
         log.info("Log out after log in several users");
         mainPage.logOutAfterLogInSeveralUsers();
         return new LoginPageSteps(driver);
+    }
+
+    public SettingsPageSteps enterToSettingsPage(){
+        try {
+            mainPage.enterToSettingsPage();
+        } catch (InterruptedException e) {
+            log.info(e.getMessage());
+        }
+        return new SettingsPageSteps(driver);
     }
 }

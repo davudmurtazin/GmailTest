@@ -3,7 +3,6 @@ package com.epam.owntask.driver;
 import com.epam.owntask.property.PropertyProvider;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.jetbrains.annotations.Contract;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -38,7 +37,6 @@ public class FactoryDriver {
             default:
                 driver = createFirefoxDriver();
                 log.info("Firefox driver created");
-
         }
 
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
@@ -60,14 +58,11 @@ public class FactoryDriver {
         log.info("Driver has been closed");
     }
 
-
-    @Contract(" -> !null")
     private static WebDriver createFirefoxDriver() {
         System.setProperty(WEBDRIVER_GECKO_DRIVER, GECKODRIVER_EXE_PATH);
         return new FirefoxDriver();
     }
 
-    @Contract(" -> !null")
     private static WebDriver createChromeDriver() {
         System.setProperty(WEBDRIVER_CHROME_DRIVER, CHROMEDRIVER_EXE_PATH);
         return new ChromeDriver();

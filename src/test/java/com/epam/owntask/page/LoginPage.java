@@ -5,19 +5,25 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 /**
  * Created by Davud_Murtazin on 11/20/2016.
  */
 public class LoginPage extends AbstractPage{
-    //user name
+    //user name-----------
     @FindBy(css = "#Email")
     private WebElement loginNameField;
+
     @FindBy(css = "#next")
     private WebElement loginEnterButton;
 
-    //password
+    //password-------------
     @FindBy(css = "#Passwd")
     private WebElement passwordField;
+
     @FindBy(css = "#signIn")
     private WebElement submitButton;
 
@@ -28,14 +34,8 @@ public class LoginPage extends AbstractPage{
     public MainPage authorization(String login, String password) throws InterruptedException {
         loginNameField.sendKeys(login);
         loginEnterButton.click();
-        Thread.sleep(1000);
         passwordField.sendKeys(password);
         submitButton.click();
-        Thread.sleep(4000);
         return new MainPage(driver);
-    }
-
-    public void openLoginPage(){
-        driver.get(PropertyProvider.getProperty("url"));
     }
 }

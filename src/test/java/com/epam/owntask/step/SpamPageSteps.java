@@ -1,7 +1,6 @@
 package com.epam.owntask.step;
 
 import com.epam.owntask.page.SpamPage;
-import com.epam.owntask.step.exception.StepsException;
 import org.openqa.selenium.WebDriver;
 
 /**
@@ -21,7 +20,7 @@ public class SpamPageSteps extends AbstractSteps {
         try {
             flag = spamPage.isSpamPage();
         } catch (InterruptedException e) {
-            new StepsException(e.getMessage());
+            log.info(e.getMessage());
         }
         return flag;
     }

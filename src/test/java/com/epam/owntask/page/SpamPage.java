@@ -17,10 +17,6 @@ public class SpamPage extends AbstractPage{
 
     public boolean isSpamPage() throws InterruptedException {
         Thread.sleep(2000);
-        if(fieldOpenSpamPage.isEnabled()){
-            return true;
-        }else{
-            return false;
-        }
+        return fieldOpenSpamPage.isEnabled();
     }
 }
