@@ -1,5 +1,6 @@
 package com.epam.owntask.step;
 
+import com.epam.owntask.entity.User;
 import com.epam.owntask.page.LoginPage;
 import com.epam.owntask.property.PropertyProvider;
 import org.openqa.selenium.WebDriver;
@@ -21,13 +22,9 @@ public class LoginPageSteps extends AbstractSteps{
         return this;
     }
 
-    public MainPageSteps authorization(String login, String password) {
+    public MainPageSteps authorization(User user) {
         log.info("Authorization");
-        try {
-            loginPage.authorization(login, password);
-        } catch (InterruptedException e) {
-            log.info(e.getMessage());
-        }
+        loginPage.authorization(user);
         return new MainPageSteps(driver);
     }
 }

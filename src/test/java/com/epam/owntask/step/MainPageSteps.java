@@ -1,5 +1,6 @@
 package com.epam.owntask.step;
 
+import com.epam.owntask.entity.User;
 import com.epam.owntask.page.MainPage;
 import org.openqa.selenium.WebDriver;
 
@@ -14,26 +15,18 @@ public class MainPageSteps extends AbstractSteps{
         mainPage = new MainPage(driver);
     }
 
-    public MainPageSteps writeMessage(String loginUser2, String message){
+    public MainPageSteps sendMessage(User user, String message){
         log.info("---Write message to user2---");
-        if(loginUser2.isEmpty() || message.isEmpty() ){
+        if( message.isEmpty() ){
             log.info("Wrong params!");
         }
-        try {
-            mainPage.writeMessage(loginUser2,message);
-        } catch (InterruptedException e) {
-            log.info(e.getMessage());
-        }
+        mainPage.sendMessage(user,message);
         return this;
     }
 
-    public MainPageSteps markMessageAsSpam(){
+    public MainPageSteps markMessageAsSpam(User user){
         log.info("---Mark message as spam---");
-        try {
-            mainPage.markMessageAsSpam();
-        } catch (InterruptedException e) {
-            log.info(e.getMessage());
-        }
+        mainPage.markMessageAsSpam(user);
         return this;
     }
 
@@ -42,11 +35,7 @@ public class MainPageSteps extends AbstractSteps{
         if(pageTitle.isEmpty()){
             log.info("Wrong params!");
         }
-        try {
-            mainPage.enterToSpamPage(pageTitle);
-        } catch (InterruptedException e) {
-            log.info(e.getMessage());
-        }
+        mainPage.enterToSpamPage(pageTitle);
         return new SpamPageSteps(driver);
     }
 
@@ -63,11 +52,7 @@ public class MainPageSteps extends AbstractSteps{
     }
 
     public SettingsPageSteps enterToSettingsPage(){
-        try {
-            mainPage.enterToSettingsPage();
-        } catch (InterruptedException e) {
-            log.info(e.getMessage());
-        }
+        mainPage.enterToSettingsPage();
         return new SettingsPageSteps(driver);
     }
 }

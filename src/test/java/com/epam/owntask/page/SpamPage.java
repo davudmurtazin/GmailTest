@@ -15,8 +15,7 @@ public class SpamPage extends AbstractPage{
         super(driver);
     }
 
-    public boolean isSpamPage() throws InterruptedException {
-        Thread.sleep(2000);
+    public boolean isSpamPage(){
         return fieldOpenSpamPage.isEnabled();
     }
 }

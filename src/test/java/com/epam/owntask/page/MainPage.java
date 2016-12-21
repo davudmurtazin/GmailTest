@@ -1,5 +1,6 @@
 package com.epam.owntask.page;
 
+import com.epam.owntask.entity.User;
 import com.epam.owntask.step.LoginPageSteps;
 import com.epam.owntask.util.ThreadSleep;
 import org.openqa.selenium.By;
@@ -7,18 +8,20 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Davud_Murtazin on 11/20/2016.
  */
 public class MainPage extends AbstractPage{
     //select message and move it to spam
-    @FindBy(xpath = "//table[@class='F cf zt']/tbody/tr[1]/td[2]/div/div")
-    private WebElement checkBoxSelectMessage;
+
 
     @FindBy(xpath = "//div[@class = 'G-tF']/div[3]/div[1]")
     private WebElement selectMoveTo;
 
-    @FindBy(xpath = "//div[contains(@class, 'J-N-Jz') and text()='Спам']")
+    @FindBy(xpath = "//div[@id=':1i4']/div")
     private WebElement caseMoveToSpam;
 
     //enter to page by title--------------
@@ -32,13 +35,13 @@ public class MainPage extends AbstractPage{
     @FindBy(xpath = "//div[@class ='z0']/div")
     private WebElement buttonWriteNewMessage;
 
-    @FindBy(xpath="//table[@class='GS']/tbody/tr/td[2]/div/div/textarea")
+    @FindBy(xpath="//div[@class = 'wO nr l1']/textarea")
     private WebElement inputLoginToSend;
 
     @FindBy(xpath="//div[@class='Am Al editable LW-avf']")
     private WebElement inputMessageText;
 
-    @FindBy(xpath = "//div[@class='aDh']/table/tbody/tr/td/div/div[2]")
+    @FindBy(xpath = "//td[@class = 'gU Up']/div/div[2]")
     private WebElement buttonSendMessage;
 
     // logout---------------------
@@ -70,25 +73,30 @@ public class MainPage extends AbstractPage{
         super(driver);
     }
 
-    public void enterToSpamPage(String title) throws InterruptedException {
+    public void enterToSpamPage(String title){
         inputSpamPageToSearch.sendKeys(title);
         submitSpamPage.click();
     }
 
-    public void enterToSettingsPage() throws InterruptedException {
+    public void enterToSettingsPage(){
         iconSettings.click();
         selectSettings.click();
     }
 
-    public void markMessageAsSpam() throws InterruptedException {
-        checkBoxSelectMessage.click();
+    public void markMessageAsSpam(User user){
+        List<WebElement> elements = driver.findElements(By.xpath("//table[@class= 'F cf zt']/descendant-or-self::span[@email = '"+user.getLogin()+"']/parent::div/parent::td/preceding-sibling::td[@class='oZ-x3 xY']/div/div"));
+        wait.waitForElementIsClickable(elements.get(0)).click();
+        for (WebElement element: elements) {
+            System.out.println(element.getText());
+        }
+
         wait.waitForElementIsClickable(selectMoveTo).click();
         caseMoveToSpam.click();
     }
 
-    public void writeMessage(String login, String message) throws InterruptedException {
+    public void sendMessage(User user, String message){
         buttonWriteNewMessage.click();
-        inputLoginToSend.sendKeys(login);
+        inputLoginToSend.sendKeys(user.getLogin());
         inputMessageText.sendKeys(message);
         buttonSendMessage.click();
     }

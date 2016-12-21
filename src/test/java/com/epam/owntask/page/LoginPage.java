@@ -1,5 +1,6 @@
 package com.epam.owntask.page;
 
+import com.epam.owntask.entity.User;
 import com.epam.owntask.property.PropertyProvider;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -31,10 +32,10 @@ public class LoginPage extends AbstractPage{
         super(driver);
     }
 
-    public MainPage authorization(String login, String password) throws InterruptedException {
-        loginNameField.sendKeys(login);
+    public MainPage authorization(User user){
+        loginNameField.sendKeys(user.getLogin());
         loginEnterButton.click();
-        passwordField.sendKeys(password);
+        passwordField.sendKeys(user.getPassword());
         submitButton.click();
         return new MainPage(driver);
     }

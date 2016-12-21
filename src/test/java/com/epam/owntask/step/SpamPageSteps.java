@@ -17,11 +17,7 @@ public class SpamPageSteps extends AbstractSteps {
     public boolean isSpamPage(){
         log.info("Check spam page");
         boolean flag = false;
-        try {
-            flag = spamPage.isSpamPage();
-        } catch (InterruptedException e) {
-            log.info(e.getMessage());
-        }
+        flag = spamPage.isSpamPage();
         return flag;
     }
 }
