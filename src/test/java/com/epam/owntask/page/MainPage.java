@@ -8,6 +8,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import java.awt.*;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,9 +67,6 @@ public class MainPage extends AbstractPage{
     @FindBy(xpath = "//div[@class='SK AX']/div[8]/div")
     private WebElement selectSettings;
 
-    //confirm forward--------------------------
-    @FindBy(xpath = "//table[@class='F cf zt']/tbody/tr[1]/td[4]/div[2]/span")
-    private WebElement linkOpenMessage;
 
 
     public MainPage(WebDriver driver) {
@@ -83,12 +83,13 @@ public class MainPage extends AbstractPage{
         selectSettings.click();
     }
 
+    public void enterToTrashPage(){
+
+    }
+
     public void markMessageAsSpam(User user){
         List<WebElement> elements = driver.findElements(By.xpath("//table[@class= 'F cf zt']/descendant-or-self::span[@email = '"+user.getLogin()+"']/parent::div/parent::td/preceding-sibling::td[@class='oZ-x3 xY']/div/div"));
         wait.waitForElementIsClickable(elements.get(0)).click();
-        for (WebElement element: elements) {
-            System.out.println(element.getText());
-        }
 
         wait.waitForElementIsClickable(selectMoveTo).click();
         caseMoveToSpam.click();
@@ -98,6 +99,26 @@ public class MainPage extends AbstractPage{
         buttonWriteNewMessage.click();
         inputLoginToSend.sendKeys(user.getLogin());
         inputMessageText.sendKeys(message);
+        buttonSendMessage.click();
+    }
+
+    public void sendMessageWithAttachment(User user, String message, StringSelection filePath){
+        buttonWriteNewMessage.click();
+        inputLoginToSend.sendKeys(user.getLogin());
+        inputMessageText.sendKeys(message);
+        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(filePath, null);
+        try {
+            Robot robot = new Robot();
+            robot.keyPress(KeyEvent.VK_CONTROL);
+            robot.keyPress(KeyEvent.VK_V);
+            robot.keyRelease(KeyEvent.VK_CONTROL);
+            robot.keyRelease(KeyEvent.VK_V);
+            ThreadSleep.waitElement(6000);
+            robot.keyPress(KeyEvent.VK_ENTER);
+            robot.keyRelease(KeyEvent.VK_ENTER);
+        } catch (AWTException e) {
+            e.printStackTrace();
+        }
         buttonSendMessage.click();
     }
 
@@ -118,5 +139,10 @@ public class MainPage extends AbstractPage{
         return new LoginPageSteps(driver);
     }
 
+    public MessagePage openConfirmForwardMessage(){
+        List<WebElement> elements = driver.findElements(By.xpath("//table[@class='F cf zt']/descendant-or-self::div[@class='yW']/span[@email = 'forwarding-noreply@google.com']"));
+        wait.waitForElementIsClickable(elements.get(0)).click();
+        return new MessagePage(driver);
+    }
 
 }

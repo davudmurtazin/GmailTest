@@ -10,6 +10,8 @@ import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
+import java.awt.datatransfer.StringSelection;
+
 /**
  * Created by Davud_Murtazin on 11/20/2016.
  */
@@ -20,11 +22,14 @@ public abstract class BaseTest {
     protected User user1;
     protected User user2;
     protected User user3;
+    protected static String MESSAGE_TEXT = "It sent by automated test!=)";
+    protected static StringSelection filePath;
 
     @BeforeMethod
     public void setUp() throws Exception {
         this.driver = FactoryDriver.getInstance();
         this.loginPage = new LoginPageSteps(driver);
+        filePath = new StringSelection("C:\\Users\\Davud_Murtazin\\Downloads\\SpaghettiTests.xlsx");
         user1 = new User(PropertyProvider.getProperty("login_user1"),PropertyProvider.getProperty("password_user1"));
         user2 = new User(PropertyProvider.getProperty("login_user2"),PropertyProvider.getProperty("password_user2"));
         user3 = new User(PropertyProvider.getProperty("login_user3"),PropertyProvider.getProperty("password_user3"));

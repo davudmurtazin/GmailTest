@@ -10,7 +10,6 @@ import org.testng.annotations.Test;
  * Created by Davud_Murtazin on 11/20/2016.
  */
 public class ShouldMarkAsSpamTest extends BaseTest{
-    private static String MESSAGE_TEXT = "It sent by automated test!=)";
     private static String SPAM_PAGE_TITLE = "in:spam";
 
     @BeforeMethod

@@ -2,7 +2,12 @@ package com.epam.owntask.step;
 
 import com.epam.owntask.entity.User;
 import com.epam.owntask.page.MainPage;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import java.awt.datatransfer.StringSelection;
+import java.util.List;
 
 /**
  * Created by Davud_Murtazin on 11/24/2016.
@@ -21,6 +26,15 @@ public class MainPageSteps extends AbstractSteps{
             log.info("Wrong params!");
         }
         mainPage.sendMessage(user,message);
+        return this;
+    }
+
+    public MainPageSteps sendMessageWithAttachment(User user, String message, StringSelection filePath){
+        log.info("---Write message to user2---");
+        if( message.isEmpty()){
+            log.info("Wrong params!");
+        }
+        mainPage.sendMessageWithAttachment(user, message, filePath);
         return this;
     }
 
@@ -54,5 +68,14 @@ public class MainPageSteps extends AbstractSteps{
     public SettingsPageSteps enterToSettingsPage(){
         mainPage.enterToSettingsPage();
         return new SettingsPageSteps(driver);
+    }
+
+    public MessagePageSteps openConfirmForwardMessage(){
+        mainPage.openConfirmForwardMessage();
+        return new MessagePageSteps(driver);
+    }
+
+    public boolean getBoolean(){
+        return true;
     }
 }

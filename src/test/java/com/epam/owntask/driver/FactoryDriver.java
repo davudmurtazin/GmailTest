@@ -14,9 +14,9 @@ import java.util.concurrent.TimeUnit;
  */
 public class FactoryDriver {
     private static final String WEBDRIVER_GECKO_DRIVER = "webdriver.gecko.driver";
-    private static final String GECKODRIVER_EXE_PATH = ".\\driver\\geckodriver.exe";
+    private static final String GECKODRIVER_EXE_PATH = "\\driver\\geckodriver.exe";
     private static final String WEBDRIVER_CHROME_DRIVER = "webdriver.chrome.driver";
-    private static final String CHROMEDRIVER_EXE_PATH = ".\\driver\\chromedriver.exe";
+    private static final String CHROMEDRIVER_EXE_PATH = "\\driver\\chromedriver.exe";
     private static final Logger log = LogManager.getRootLogger();
     private static WebDriver driver;
 
