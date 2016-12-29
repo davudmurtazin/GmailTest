@@ -19,8 +19,6 @@ import java.util.List;
  */
 public class MainPage extends AbstractPage{
     //select message and move it to spam
-
-
     @FindBy(xpath = "//div[@class = 'G-tF']/div[3]/div[1]")
     private WebElement selectMoveTo;
 
@@ -51,7 +49,7 @@ public class MainPage extends AbstractPage{
     @FindBy(xpath = "//a[@class = 'gb_b gb_db gb_R']/span")
     private WebElement iconLogout;
 
-    @FindBy(xpath = "//a[text() = 'Выйти']")
+    @FindBy(xpath = "//div[@class='gb_xb']/div[2]/a")
     private WebElement buttonLogout;
 
     @FindBy(xpath = "//a[@id='account-chooser-link']")
@@ -80,6 +78,7 @@ public class MainPage extends AbstractPage{
 
     public void enterToSettingsPage(){
         iconSettings.click();
+        ThreadSleep.waitElement(1000);
         selectSettings.click();
     }
 
@@ -132,7 +131,7 @@ public class MainPage extends AbstractPage{
     }
 
     public LoginPageSteps logOutAfterLogInSeveralUsers(){
-        iconLogout.click();
+        wait.waitForElementIsClickable(iconLogout).click();
         ThreadSleep.waitElement(1000);
         buttonLogout.click();
         buttonNewUser.click();
@@ -144,5 +143,4 @@ public class MainPage extends AbstractPage{
         wait.waitForElementIsClickable(elements.get(0)).click();
         return new MessagePage(driver);
     }
-
 }

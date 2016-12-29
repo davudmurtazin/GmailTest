@@ -1,5 +1,6 @@
 package com.epam.owntask.step;
 
+import com.epam.owntask.entity.User;
 import com.epam.owntask.page.SpamPage;
 import org.openqa.selenium.WebDriver;
 
@@ -14,8 +15,8 @@ public class SpamPageSteps extends AbstractSteps {
         spamPage = new SpamPage(driver);
     }
 
-    public boolean isSpamPage(){
+    public boolean isSpamPage(User user){
         log.info("Check spam page");
-        return spamPage.isSpamPage();
+        return spamPage.isSpamPage(user);
     }
 }

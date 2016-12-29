@@ -22,7 +22,7 @@ public class ShouldMarkAsSpamTest extends BaseTest{
 
     @Test
     public void testMarkMessageAsSpam() throws Exception {
-        Assert.assertTrue(mainPage.logOutAfterLogInOneUser()
+        Assert.assertFalse(mainPage.logOutAfterLogInOneUser()
                 .authorization(user2)
                 .markMessageAsSpam(user1)
                 .logOutAfterLogInSeveralUsers()
@@ -31,7 +31,7 @@ public class ShouldMarkAsSpamTest extends BaseTest{
                 .logOutAfterLogInSeveralUsers()
                 .authorization(user2)
                 .enterToSpamPage(SPAM_PAGE_TITLE)
-                .isSpamPage());
+                .isSpamPage(user1));
     }
 
     @AfterMethod
