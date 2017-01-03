@@ -29,7 +29,7 @@ public class MainPageSteps extends AbstractSteps{
         return this;
     }
 
-    public MainPageSteps sendMessageWithAttachment(User user, String message, StringSelection filePath){
+    public MainPageSteps sendMessageWithAttachment(User user, String message, String filePath){
         log.info("---Write message to user2---");
         if( message.isEmpty()){
             log.info("Wrong params!");

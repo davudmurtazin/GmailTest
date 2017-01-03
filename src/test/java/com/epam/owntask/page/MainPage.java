@@ -11,6 +11,7 @@ import org.openqa.selenium.support.FindBy;
 import java.awt.*;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,6 +46,9 @@ public class MainPage extends AbstractPage{
     @FindBy(xpath = "//td[@class = 'gU Up']/div/div[2]")
     private WebElement buttonSendMessage;
 
+    @FindBy(xpath = "//div[@class='a1 aaA aMZ']")
+    private WebElement buttonAddAttachment;
+
     // logout---------------------
     @FindBy(xpath = "//a[@class = 'gb_b gb_db gb_R']/span")
     private WebElement iconLogout;
@@ -62,10 +66,8 @@ public class MainPage extends AbstractPage{
     @FindBy(xpath = "//div[@class='T-I J-J5-Ji ash T-I-ax7 L3']/div[1]")
     private WebElement iconSettings;
 
-    @FindBy(xpath = "//div[@class='SK AX']/div[8]/div")
+    @FindBy(xpath = "//div[@class='J-M asi aYO jQjAxd']/descendant-or-self::div[@class='J-N aMS']/div")
     private WebElement selectSettings;
-
-
 
     public MainPage(WebDriver driver) {
         super(driver);
@@ -77,9 +79,9 @@ public class MainPage extends AbstractPage{
     }
 
     public void enterToSettingsPage(){
-        iconSettings.click();
+        wait.waitForElementIsClickable(iconSettings).click();
         ThreadSleep.waitElement(1000);
-        selectSettings.click();
+        wait.waitForElementIsClickable(selectSettings).click();
     }
 
     public void enterToTrashPage(){
@@ -101,27 +103,54 @@ public class MainPage extends AbstractPage{
         buttonSendMessage.click();
     }
 
-    public void sendMessageWithAttachment(User user, String message, StringSelection filePath){
+    public void sendMessageWithAttachment(User user, String message, String filePath){
+        String currentWindow = driver.getWindowHandle();
         buttonWriteNewMessage.click();
         inputLoginToSend.sendKeys(user.getLogin());
         inputMessageText.sendKeys(message);
-        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(filePath, null);
+        buttonAddAttachment.click();
+        switchUtil.switchWindow();
         try {
-            Robot robot = new Robot();
-            robot.keyPress(KeyEvent.VK_CONTROL);
-            robot.keyPress(KeyEvent.VK_V);
-            robot.keyRelease(KeyEvent.VK_CONTROL);
-            robot.keyRelease(KeyEvent.VK_V);
-            ThreadSleep.waitElement(6000);
+            Thread.sleep(4000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        try {
+        Robot robot = new Robot();
+        for (char c : filePath.toCharArray()) {
+            switch(c){
+                case '.' :  robot.keyPress(KeyEvent.VK_PERIOD);
+                            robot.keyRelease(KeyEvent.VK_PERIOD);break;
+                case ':' :  robot.keyPress(KeyEvent.VK_SHIFT);
+                            robot.keyPress(KeyEvent.VK_SEMICOLON);
+                            robot.keyRelease(KeyEvent.VK_SEMICOLON);
+                            robot.keyRelease(KeyEvent.VK_SHIFT); break;
+                case '_' :  robot.keyPress(KeyEvent.VK_SHIFT);
+                            robot.keyPress(KeyEvent.VK_MINUS);
+                            robot.keyRelease(KeyEvent.VK_MINUS);
+                            robot.keyRelease(KeyEvent.VK_SHIFT); break;
+                default:    robot.keyPress(c);
+                            robot.keyRelease(c); break;
+            }
+//            if (c != '.') {
+//                robot.keyPress(c);
+//                robot.keyRelease(c);
+//            } else {
+//                robot.keyPress(KeyEvent.VK_PERIOD);
+//            }
+        }
+
             robot.keyPress(KeyEvent.VK_ENTER);
-            robot.keyRelease(KeyEvent.VK_ENTER);
         } catch (AWTException e) {
             e.printStackTrace();
         }
-        buttonSendMessage.click();
+        ThreadSleep.waitElement(10000);
+        driver.switchTo().window(currentWindow);
+        wait.waitForElementIsClickable(buttonSendMessage).click();
     }
 
     public LoginPageSteps logOutAfterLogInOneUser(){
+        ThreadSleep.waitElement(2000);
         iconLogout.click();
         ThreadSleep.waitElement(1000);
         buttonLogout.click();
