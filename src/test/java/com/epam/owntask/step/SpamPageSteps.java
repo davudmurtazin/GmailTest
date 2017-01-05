@@ -15,8 +15,8 @@ public class SpamPageSteps extends AbstractSteps {
         spamPage = new SpamPage(driver);
     }
 
-    public boolean isSpamPage(User user){
+    public boolean hasAnyMessageFromUser(User user){
         log.info("Check spam page");
-        return spamPage.isSpamPage(user);
+        return spamPage.hasAnyMessageFromUser(user);
     }
 }

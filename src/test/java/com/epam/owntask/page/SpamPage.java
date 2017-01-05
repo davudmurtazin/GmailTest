@@ -16,7 +16,7 @@ public class SpamPage extends AbstractPage{
         super(driver);
     }
 
-    public boolean isSpamPage(User user){
+    public boolean hasAnyMessageFromUser(User user){
         List<WebElement> elements = driver.findElements(By.xpath("//table[@class= 'F cf zt']/descendant-or-self::span[@email = '"+user.getLogin()+"']"));
         return elements.isEmpty();
     }

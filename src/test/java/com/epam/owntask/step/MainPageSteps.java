@@ -53,6 +53,15 @@ public class MainPageSteps extends AbstractSteps{
         return new SpamPageSteps(driver);
     }
 
+    public TrashPageSteps enterToTrashPage(String pageTitle){
+        log.info("Enter to page by title");
+        if(pageTitle.isEmpty()){
+            log.info("Wrong params!");
+        }
+        mainPage.enterToTrashPage(pageTitle);
+        return new TrashPageSteps(driver);
+    }
+
     public LoginPageSteps logOutAfterLogInOneUser(){
         log.info("Log out after log in one user");
         mainPage.logOutAfterLogInOneUser();
@@ -75,7 +84,7 @@ public class MainPageSteps extends AbstractSteps{
         return new MessagePageSteps(driver);
     }
 
-    public boolean getBoolean(){
-        return true;
+    public boolean hasMessageWithoutAttachmentInInbox(User user){
+        return mainPage.hasMessageWithoutAttachmentInInbox(user);
     }
 }

@@ -10,7 +10,6 @@ import org.testng.annotations.Test;
  * Created by Davud_Murtazin on 11/20/2016.
  */
 public class ShouldMarkAsSpamTest extends BaseTest{
-    private static String SPAM_PAGE_TITLE = "in:spam";
 
     @BeforeMethod
     public void setUp() throws Exception {
@@ -22,7 +21,7 @@ public class ShouldMarkAsSpamTest extends BaseTest{
 
     @Test
     public void testMarkMessageAsSpam() throws Exception {
-        Assert.assertFalse(mainPage.logOutAfterLogInOneUser()
+        softAssert.assertFalse(mainPage.logOutAfterLogInOneUser()
                 .authorization(user2)
                 .markMessageAsSpam(user1)
                 .logOutAfterLogInSeveralUsers()
@@ -31,7 +30,7 @@ public class ShouldMarkAsSpamTest extends BaseTest{
                 .logOutAfterLogInSeveralUsers()
                 .authorization(user2)
                 .enterToSpamPage(SPAM_PAGE_TITLE)
-                .isSpamPage(user1));
+                .hasAnyMessageFromUser(user1));
     }
 
     @AfterMethod

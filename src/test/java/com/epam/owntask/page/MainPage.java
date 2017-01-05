@@ -2,6 +2,7 @@ package com.epam.owntask.page;
 
 import com.epam.owntask.entity.User;
 import com.epam.owntask.step.LoginPageSteps;
+import com.epam.owntask.util.RobotUtil;
 import com.epam.owntask.util.ThreadSleep;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -28,10 +29,10 @@ public class MainPage extends AbstractPage{
 
     //enter to page by title--------------
     @FindBy(xpath = "//input[@id='gbqfq']")
-    private WebElement inputSpamPageToSearch;
+    private WebElement inputPageTitleToSearch;
 
     @FindBy(xpath = "//button[@id='gbqfb']")
-    private WebElement submitSpamPage;
+    private WebElement buttonEnterToPage;
 
     //write message---------------------
     @FindBy(xpath = "//div[@class ='z0']/div")
@@ -39,6 +40,9 @@ public class MainPage extends AbstractPage{
 
     @FindBy(xpath="//div[@class = 'wO nr l1']/textarea")
     private WebElement inputLoginToSend;
+
+    @FindBy(xpath = "//input[@class='aoT']")
+    private WebElement inputSubject;
 
     @FindBy(xpath="//div[@class='Am Al editable LW-avf']")
     private WebElement inputMessageText;
@@ -73,9 +77,9 @@ public class MainPage extends AbstractPage{
         super(driver);
     }
 
-    public void enterToSpamPage(String title){
-        inputSpamPageToSearch.sendKeys(title);
-        submitSpamPage.click();
+    public void enterToSpamPage(String pageTitle){
+        inputPageTitleToSearch.sendKeys(pageTitle);
+        buttonEnterToPage.click();
     }
 
     public void enterToSettingsPage(){
@@ -84,8 +88,9 @@ public class MainPage extends AbstractPage{
         wait.waitForElementIsClickable(selectSettings).click();
     }
 
-    public void enterToTrashPage(){
-
+    public void enterToTrashPage(String pageTitle){
+        inputPageTitleToSearch.sendKeys(pageTitle);
+        buttonEnterToPage.click();
     }
 
     public void markMessageAsSpam(User user){
@@ -99,7 +104,7 @@ public class MainPage extends AbstractPage{
     public void sendMessage(User user, String message){
         buttonWriteNewMessage.click();
         inputLoginToSend.sendKeys(user.getLogin());
-        inputMessageText.sendKeys(message);
+        wait.waitForElementIsClickable(inputMessageText).sendKeys(message);
         buttonSendMessage.click();
     }
 
@@ -110,42 +115,16 @@ public class MainPage extends AbstractPage{
         inputMessageText.sendKeys(message);
         buttonAddAttachment.click();
         switchUtil.switchWindow();
+        ThreadSleep.waitElement(4000);
         try {
-            Thread.sleep(4000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        try {
-        Robot robot = new Robot();
-        for (char c : filePath.toCharArray()) {
-            switch(c){
-                case '.' :  robot.keyPress(KeyEvent.VK_PERIOD);
-                            robot.keyRelease(KeyEvent.VK_PERIOD);break;
-                case ':' :  robot.keyPress(KeyEvent.VK_SHIFT);
-                            robot.keyPress(KeyEvent.VK_SEMICOLON);
-                            robot.keyRelease(KeyEvent.VK_SEMICOLON);
-                            robot.keyRelease(KeyEvent.VK_SHIFT); break;
-                case '_' :  robot.keyPress(KeyEvent.VK_SHIFT);
-                            robot.keyPress(KeyEvent.VK_MINUS);
-                            robot.keyRelease(KeyEvent.VK_MINUS);
-                            robot.keyRelease(KeyEvent.VK_SHIFT); break;
-                default:    robot.keyPress(c);
-                            robot.keyRelease(c); break;
-            }
-//            if (c != '.') {
-//                robot.keyPress(c);
-//                robot.keyRelease(c);
-//            } else {
-//                robot.keyPress(KeyEvent.VK_PERIOD);
-//            }
-        }
-
-            robot.keyPress(KeyEvent.VK_ENTER);
+            RobotUtil robotUtil = new RobotUtil(new Robot());
+            robotUtil.enterPathByRobot(filePath);
         } catch (AWTException e) {
             e.printStackTrace();
         }
-        ThreadSleep.waitElement(10000);
+        ThreadSleep.waitElement(4000);
         driver.switchTo().window(currentWindow);
+        wait.waitForElementIsClickable(inputSubject).sendKeys(message);
         wait.waitForElementIsClickable(buttonSendMessage).click();
     }
 
@@ -163,7 +142,7 @@ public class MainPage extends AbstractPage{
         wait.waitForElementIsClickable(iconLogout).click();
         ThreadSleep.waitElement(1000);
         buttonLogout.click();
-        buttonNewUser.click();
+        wait.waitForElementIsClickable(buttonNewUser).click();
         return new LoginPageSteps(driver);
     }
 
@@ -171,5 +150,10 @@ public class MainPage extends AbstractPage{
         List<WebElement> elements = driver.findElements(By.xpath("//table[@class='F cf zt']/descendant-or-self::div[@class='yW']/span[@email = 'forwarding-noreply@google.com']"));
         wait.waitForElementIsClickable(elements.get(0)).click();
         return new MessagePage(driver);
+    }
+
+    public boolean hasMessageWithoutAttachmentInInbox(User user){
+        List<WebElement> elements = driver.findElements(By.xpath("//table[@class= 'F cf zt']/descendant-or-self::span[@email = '"+user.getLogin()+"']"));
+        return elements.isEmpty();
     }
 }
