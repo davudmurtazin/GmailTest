@@ -2,6 +2,7 @@ package com.epam.owntask.page;
 
 import com.epam.owntask.entity.User;
 import com.epam.owntask.step.LoginPageSteps;
+import com.epam.owntask.util.FileUtil;
 import com.epam.owntask.util.RobotUtil;
 import com.epam.owntask.util.ThreadSleep;
 import org.openqa.selenium.By;
@@ -52,6 +53,9 @@ public class MainPage extends AbstractPage{
 
     @FindBy(xpath = "//div[@class='a1 aaA aMZ']")
     private WebElement buttonAddAttachment;
+
+    @FindBy(xpath = "//div[@class='HyIydd']")
+    private WebElement linkIsBigFile;
 
     // logout---------------------
     @FindBy(xpath = "//a[@class = 'gb_b gb_db gb_R']/span")
@@ -126,6 +130,23 @@ public class MainPage extends AbstractPage{
         driver.switchTo().window(currentWindow);
         wait.waitForElementIsClickable(inputSubject).sendKeys(message);
         wait.waitForElementIsClickable(buttonSendMessage).click();
+    }
+
+    public boolean sendMessageWithBigFile(User user, String message){
+        String currentWindow = driver.getWindowHandle();
+        buttonWriteNewMessage.click();
+        inputLoginToSend.sendKeys(user.getLogin());
+        wait.waitForElementIsClickable(inputMessageText).sendKeys(message);
+        buttonAddAttachment.click();
+        switchUtil.switchWindow();
+        try {
+            RobotUtil robotUtil = new RobotUtil(new Robot());
+            robotUtil.enterPathByRobot(FileUtil.createFile());
+        } catch (AWTException e) {
+            e.printStackTrace();
+        }
+        driver.switchTo().window(currentWindow);
+        return wait.waitForElementIsClickable(linkIsBigFile).isEnabled();
     }
 
     public LoginPageSteps logOutAfterLogInOneUser(){

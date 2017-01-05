@@ -21,7 +21,7 @@ public class MainPageSteps extends AbstractSteps{
     }
 
     public MainPageSteps sendMessage(User user, String message){
-        log.info("---Write message to user2---");
+        log.info("Write message without attachment");
         if( message.isEmpty() ){
             log.info("Wrong params!");
         }
@@ -30,7 +30,7 @@ public class MainPageSteps extends AbstractSteps{
     }
 
     public MainPageSteps sendMessageWithAttachment(User user, String message, String filePath){
-        log.info("---Write message to user2---");
+        log.info("Write message with attachment");
         if( message.isEmpty()){
             log.info("Wrong params!");
         }
@@ -38,14 +38,22 @@ public class MainPageSteps extends AbstractSteps{
         return this;
     }
 
+    public boolean sendMessageWithBigFile(User user, String message){
+        log.info("Write message with attaching big file");
+        if( message.isEmpty()){
+            log.info("Wrong params!");
+        }
+        return mainPage.sendMessageWithBigFile(user, message);
+    }
+
     public MainPageSteps markMessageAsSpam(User user){
-        log.info("---Mark message as spam---");
+        log.info("Mark message as spam");
         mainPage.markMessageAsSpam(user);
         return this;
     }
 
     public SpamPageSteps enterToSpamPage(String pageTitle){
-        log.info("Enter to page by title");
+        log.info("Enter to spam page");
         if(pageTitle.isEmpty()){
             log.info("Wrong params!");
         }
@@ -54,7 +62,7 @@ public class MainPageSteps extends AbstractSteps{
     }
 
     public TrashPageSteps enterToTrashPage(String pageTitle){
-        log.info("Enter to page by title");
+        log.info("Enter to trash page");
         if(pageTitle.isEmpty()){
             log.info("Wrong params!");
         }
@@ -75,16 +83,19 @@ public class MainPageSteps extends AbstractSteps{
     }
 
     public SettingsPageSteps enterToSettingsPage(){
+        log.info("Enter to setting page");
         mainPage.enterToSettingsPage();
         return new SettingsPageSteps(driver);
     }
 
     public MessagePageSteps openConfirmForwardMessage(){
+        log.info("Open confirm formard message");
         mainPage.openConfirmForwardMessage();
         return new MessagePageSteps(driver);
     }
 
     public boolean hasMessageWithoutAttachmentInInbox(User user){
+        log.info("Checking message without attachment in inbox");
         return mainPage.hasMessageWithoutAttachmentInInbox(user);
     }
 }
