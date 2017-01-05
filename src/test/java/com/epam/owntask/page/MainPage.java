@@ -139,13 +139,15 @@ public class MainPage extends AbstractPage{
         wait.waitForElementIsClickable(inputMessageText).sendKeys(message);
         buttonAddAttachment.click();
         switchUtil.switchWindow();
+        String filePath = FileUtil.createFile();
         try {
             RobotUtil robotUtil = new RobotUtil(new Robot());
-            robotUtil.enterPathByRobot(FileUtil.createFile());
+            robotUtil.enterPathByRobot(filePath);
         } catch (AWTException e) {
             e.printStackTrace();
         }
         driver.switchTo().window(currentWindow);
+        FileUtil.deleteFile(filePath);
         return wait.waitForElementIsClickable(linkIsBigFile).isEnabled();
     }
 
