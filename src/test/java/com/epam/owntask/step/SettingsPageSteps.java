@@ -25,4 +25,10 @@ public class SettingsPageSteps extends AbstractSteps {
         settingsPage.enterToFiltersPage();
         return new FiltersPageSteps(driver);
     }
+
+    public ThemesPageSteps enterToThemesPage(){
+        log.info("Enter to themes page");
+        settingsPage.enterToThemesPage();
+        return new ThemesPageSteps(driver);
+    }
 }

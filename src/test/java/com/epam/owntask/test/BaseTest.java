@@ -24,10 +24,11 @@ public abstract class BaseTest {
     protected User user2;
     protected User user3;
     protected SoftAssert softAssert;
-    protected static String TRASH_PAGE_TITLE = "in:trash";
-    protected static String SPAM_PAGE_TITLE = "in:spam";
-    protected static final String MESSAGE_TEXT = "It sent by automated test!";
-    protected static final String FILE_PATH = "C:/Users/Davud_Murtazin/Downloads/SpaghettiTests.xlsx";
+    protected static String TRASH_PAGE_TITLE;
+    protected static String SPAM_PAGE_TITLE;
+    protected static String MESSAGE_TEXT;
+    protected static String FILE_PATH;
+    protected static String PICTURE_PATH;
 
     @BeforeMethod
     public void setUp() throws Exception {
@@ -37,6 +38,11 @@ public abstract class BaseTest {
         user1 = new User(PropertyProvider.getProperty("login_user1"),PropertyProvider.getProperty("password_user1"));
         user2 = new User(PropertyProvider.getProperty("login_user2"),PropertyProvider.getProperty("password_user2"));
         user3 = new User(PropertyProvider.getProperty("login_user3"),PropertyProvider.getProperty("password_user3"));
+        TRASH_PAGE_TITLE = PropertyProvider.getProperty("trash_page_title");
+        SPAM_PAGE_TITLE = PropertyProvider.getProperty("spam_page_title");
+        MESSAGE_TEXT = PropertyProvider.getProperty("message_text");
+        FILE_PATH = PropertyProvider.getProperty("file_path");
+        PICTURE_PATH = PropertyProvider.getProperty("picture_path");
     }
 
     @AfterMethod

@@ -15,6 +15,9 @@ public class SettingsPage extends AbstractPage {
     @FindBy(xpath = "//div[@class='nH fY']/div[5]/a")
     private WebElement buttonFilter;
 
+    @FindBy(xpath = "//div[@class='nH fY']/div[10]/a")
+    private WebElement buttonThemes;
+
     public SettingsPage(WebDriver driver) {
         super(driver);
     }
@@ -25,5 +28,9 @@ public class SettingsPage extends AbstractPage {
 
     public void enterToFiltersPage(){
         wait.waitForElementIsClickable(buttonFilter).click();
+    }
+
+    public void enterToThemesPage(){
+        wait.waitForElementIsClickable(buttonThemes).click();
     }
 }

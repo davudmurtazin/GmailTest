@@ -12,12 +12,16 @@ public class ShouldAddTheme extends BaseTest {
     @BeforeMethod
     public void setUp() throws Exception {
         super.setUp();
+        this.loginPage.openLoginPage();
+        mainPage = loginPage.authorization(user1);
     }
 
     @Test
     public void testName() throws Exception {
-
-
+        softAssert.assertFalse(mainPage.enterToSettingsPage()
+                .enterToThemesPage()
+                .setTheme(FILE_PATH)
+                .isWrongFileFormat());
     }
 
     @AfterMethod
