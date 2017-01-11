@@ -19,7 +19,7 @@ public class ThemesPage extends AbstractPage {
     @FindBy(xpath = "//div[@class='Kj-JD-Jl a8Y']/div[4]")
     private WebElement buttonYourPictures;
 
-    @FindBy(xpath = "//div[@class='a-Qh-Yb a-Qh-Yb-Zb a-Qh-Yb-hc']/div[3]/div")
+    @FindBy(xpath = "//div[@class='a-Qh a-Qh-w']/div")
     private WebElement buttonUploadPicture;
 
     @FindBy(xpath = "//div[@class='Dm-Xx-py Dm-Xx-ty']/div[4]/div")
@@ -33,11 +33,9 @@ public class ThemesPage extends AbstractPage {
     }
 
     public void setTheme(String filePath) throws AWTException {
-        wait.waitForElementIsClickable(buttonSetTheme).click();
-        driver.switchTo().activeElement();
-        buttonYourPictures.click();
-        driver.switchTo().activeElement();
-        buttonUploadPicture.click();
+        buttonSetTheme.click();
+        wait.waitForElementIsClickable(buttonYourPictures).click();
+        wait.waitForElementIsClickable(buttonUploadPicture).click();
         buttonUploadFromComputer.click();
         String currentWindow = driver.getWindowHandle();
         switchUtil.switchWindow();
