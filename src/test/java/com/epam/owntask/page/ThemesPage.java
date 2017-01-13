@@ -31,8 +31,6 @@ public class ThemesPage extends AbstractPage {
     @FindBy(xpath = "//iframe[@class='KA-JQ']")
     private WebElement frameThemeAdding;
 
-
-
     public ThemesPage(WebDriver driver) {
         super(driver);
     }
@@ -45,14 +43,12 @@ public class ThemesPage extends AbstractPage {
         driver.switchTo().frame(frameThemeAdding);
         wait.waitForElementIsClickable(buttonUploadPicture).click();
         wait.waitForElementIsClickable(buttonUploadFromComputer).click();
-        String currentWindow = driver.getWindowHandle();
         switchUtil.switchWindow();
         ThreadSleep.waitElement(4000);
         RobotUtil robotUtil = new RobotUtil(new Robot());
         robotUtil.enterPathByRobot(filePath);
         ThreadSleep.waitElement(4000);
         switchUtil.switchWindow();
-
     }
 
     public boolean isWrongFileFormat(){

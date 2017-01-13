@@ -1,12 +1,19 @@
 package com.epam.owntask.util;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.WebElement;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.*;
+import java.util.List;
 
 /**
  * Created by Davud_Murtazin on 1/4/2017.
  */
 public class RobotUtil {
+    protected static final Logger log = LogManager.getRootLogger();
     private Robot robot;
 
     public RobotUtil(Robot robot) {
@@ -23,7 +30,7 @@ public class RobotUtil {
         robot.keyPress(KeyEvent.VK_ENTER);
     }
 
-    public void setChar(char character) {
+    private void setChar(char character) {
         switch (character) {
             case 'a': doType(KeyEvent.VK_A); break;
             case 'b': doType(KeyEvent.VK_B); break;
@@ -139,5 +146,18 @@ public class RobotUtil {
         robot.keyPress(keyCodes[offset]);
         doType(keyCodes, offset + 1, length - 1);
         robot.keyRelease(keyCodes[offset]);
+    }
+
+    public void addEmoticonsByRobot(List<WebElement> allEmoticons, int countOfEmotions, ExplicitWait wait){
+        if(allEmoticons.isEmpty()){
+            log.info("List of emoticons is empty!");
+        }else{
+            for(int i = 0; i < countOfEmotions; i++){
+                int indexOfEmotion = new Random().nextInt(allEmoticons.size());
+                robot.keyPress(KeyEvent.VK_SHIFT);
+                robot.keyRelease(KeyEvent.VK_SHIFT);
+                wait.waitForElementIsClickable(allEmoticons.get(indexOfEmotion)).click();
+            }
+        }
     }
 }

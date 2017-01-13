@@ -8,9 +8,11 @@ import com.epam.owntask.util.ThreadSleep;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.util.List;
 
 /**
@@ -52,6 +54,15 @@ public class MainPage extends AbstractPage{
 
     @FindBy(xpath = "//div[@class='HyIydd']")
     private WebElement linkIsBigFile;
+
+    @FindBy(xpath = "//div[@class='QT aaA aMZ']")
+    private WebElement buttonEmoticons;
+
+    @FindBy(xpath = "//button[@class='a8v a8t a8t']")
+    private WebElement buttonMoreEmoticons;
+
+    @FindAll(@FindBy( xpath = "//div[@class='wVboN']/button"))
+    private List<WebElement> allEmoticons;
 
     // logout---------------------
     @FindBy(xpath = "//a[@class = 'gb_b gb_db gb_R']/span")
@@ -105,6 +116,21 @@ public class MainPage extends AbstractPage{
         buttonWriteNewMessage.click();
         inputLoginToSend.sendKeys(user.getLogin());
         wait.waitForElementIsClickable(inputMessageText).sendKeys(message);
+        buttonSendMessage.click();
+    }
+
+    public void sendMessageWithEmotion(User user, int countOfEmotions){
+        buttonWriteNewMessage.click();
+        inputLoginToSend.sendKeys(user.getLogin());
+        buttonEmoticons.click();
+        buttonMoreEmoticons.click();
+        driver.switchTo().activeElement();
+        try {
+            RobotUtil robotUtil = new RobotUtil(new Robot());
+            robotUtil.addEmoticonsByRobot(allEmoticons, countOfEmotions, wait);
+        } catch (AWTException e) {
+            log.info(e.getMessage());
+        }
         buttonSendMessage.click();
     }
 
@@ -174,5 +200,9 @@ public class MainPage extends AbstractPage{
     public boolean hasMessageWithoutAttachmentInInbox(User user){
         List<WebElement> elements = driver.findElements(By.xpath("//table[@class= 'F cf zt']/descendant-or-self::span[@email = '"+user.getLogin()+"']"));
         return elements.isEmpty();
+    }
+
+    public boolean hasMessageWithEmoticon(){
+       return false;
     }
 }

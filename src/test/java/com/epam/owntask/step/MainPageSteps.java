@@ -29,6 +29,15 @@ public class MainPageSteps extends AbstractSteps{
         return this;
     }
 
+    public MainPageSteps sendMessageWithEmotion(User user, int countOfEmoticons){
+        log.info("Write message with emoticon");
+        if( countOfEmoticons == 0){
+            log.info("Wrong params!");
+        }
+        mainPage.sendMessageWithEmotion(user,countOfEmoticons);
+        return this;
+    }
+
     public MainPageSteps sendMessageWithAttachment(User user, String message, String filePath){
         log.info("Write message with attachment");
         if( message.isEmpty()){
@@ -97,5 +106,9 @@ public class MainPageSteps extends AbstractSteps{
     public boolean hasMessageWithoutAttachmentInInbox(User user){
         log.info("Checking message without attachment in inbox");
         return mainPage.hasMessageWithoutAttachmentInInbox(user);
+    }
+
+    public boolean hasMessageWithEmoticons(){
+        return mainPage.hasMessageWithEmoticon();
     }
 }
