@@ -31,22 +31,35 @@ public class ThemesPage extends AbstractPage {
     @FindBy(xpath = "//iframe[@class='KA-JQ']")
     private WebElement frameThemeAdding;
 
+    @FindBy(xpath = "//div[@bgid='custom-10']/div[2]")
+    private WebElement imgBeach;
+
     public ThemesPage(WebDriver driver) {
         super(driver);
     }
 
-    public void setTheme(String filePath) throws AWTException {
+    public void setTheme(){
         buttonSetTheme.click();
         ThreadSleep.waitElement(1000);
+    }
+
+    public void enterMyPictures(){
         wait.waitForElementIsClickable(buttonYourPictures).click();
         wait.waitForElementIsClickable(frameThemeAdding);
         driver.switchTo().frame(frameThemeAdding);
+    }
+
+    public void enterUploadPicture(String filePath){
         wait.waitForElementIsClickable(buttonUploadPicture).click();
         wait.waitForElementIsClickable(buttonUploadFromComputer).click();
         switchUtil.switchWindow();
         ThreadSleep.waitElement(4000);
-        RobotUtil robotUtil = new RobotUtil(new Robot());
-        robotUtil.enterPathByRobot(filePath);
+        try {
+            RobotUtil robotUtil = new RobotUtil(new Robot());
+            robotUtil.enterPathByRobot(filePath);
+        } catch (AWTException e) {
+            e.printStackTrace();
+        }
         ThreadSleep.waitElement(4000);
         switchUtil.switchWindow();
     }
@@ -54,4 +67,15 @@ public class ThemesPage extends AbstractPage {
     public boolean isWrongFileFormat(){
         return wait.waitForElementIsClickable(textErrorMessage).isEnabled();
     }
+
+    public boolean couldSetBeachTheme(){
+        if(imgBeach.isEnabled()){
+            imgBeach.click();
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+
 }

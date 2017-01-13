@@ -16,18 +16,31 @@ public class ThemesPageSteps extends AbstractSteps {
         themesPage = new ThemesPage(driver);
     }
 
-    public ThemesPageSteps setTheme(String filePath){
+    public ThemesPageSteps setTheme(){
         log.info("Setting theme");
-        try {
-            themesPage.setTheme(filePath);
-        } catch (AWTException e) {
-            log.info(e.getMessage());
-        }
+        themesPage.setTheme();
+        return this;
+    }
+
+    public ThemesPageSteps enterMyPictures(){
+        log.info("Enter my pictures");
+        themesPage.enterMyPictures();
+        return this;
+    }
+
+    public ThemesPageSteps enterUploadPicture(String filePath){
+        log.info("Enter my pictures");
+        themesPage.enterUploadPicture(filePath);
         return this;
     }
 
     public boolean isWrongFileFormat(){
         log.info("Check file format");
         return themesPage.isWrongFileFormat();
+    }
+
+    public boolean couldSetBeachTheme(){
+        log.info("Check beach theme");
+        return themesPage.couldSetBeachTheme();
     }
 }

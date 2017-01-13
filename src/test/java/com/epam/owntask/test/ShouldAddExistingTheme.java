@@ -5,9 +5,9 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 /**
- * Created by Davud_Murtazin on 1/12/2017.
+ * Created by Davud_Murtazin on 1/13/2017.
  */
-public class ShouldSendMessageWithEmotion extends BaseTest {
+public class ShouldAddExistingTheme extends BaseTest {
 
     @BeforeMethod
     public void setUp() throws Exception {
@@ -17,10 +17,12 @@ public class ShouldSendMessageWithEmotion extends BaseTest {
     }
 
     @Test
-    public void testShouldSendMessageWithEmoticon() throws Exception {
-        softAssert.assertFalse(mainPage.sendMessageWithEmotion(user1, 2)
-                .openLastMessage(user1)
-                .hasEmoticon());
+    public void testShouldAddExistingTheme() throws Exception {
+        softAssert.assertFalse(mainPage.enterToSettingsPage()
+                .enterToThemesPage()
+                .setTheme()
+                .couldSetBeachTheme());
+
     }
 
     @AfterMethod

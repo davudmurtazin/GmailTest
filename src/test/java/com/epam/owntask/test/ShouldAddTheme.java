@@ -20,7 +20,9 @@ public class ShouldAddTheme extends BaseTest {
     public void testName() throws Exception {
         softAssert.assertFalse(mainPage.enterToSettingsPage()
                 .enterToThemesPage()
-                .setTheme(FILE_PATH)
+                .setTheme()
+                .enterMyPictures()
+                .enterUploadPicture(FILE_PATH)
                 .isWrongFileFormat());
     }
 
