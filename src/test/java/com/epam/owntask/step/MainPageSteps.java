@@ -108,7 +108,8 @@ public class MainPageSteps extends AbstractSteps{
         return mainPage.hasMessageWithoutAttachmentInInbox(user);
     }
 
-    public boolean hasMessageWithEmoticons(){
-        return mainPage.hasMessageWithEmoticon();
+    public MessagePageSteps openLastMessage(User user){
+        mainPage.openLastMessage(user);
+        return new MessagePageSteps(driver);
     }
 }

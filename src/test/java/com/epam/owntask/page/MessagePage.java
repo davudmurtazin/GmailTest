@@ -18,6 +18,9 @@ public class MessagePage extends AbstractPage {
     @FindBy(xpath = "//form/p/input")
     private WebElement buttonConfirmForward;
 
+    @FindBy(xpath = "//img[@class='CToWUd']")
+    private WebElement imgEmoticon;
+
     public MessagePage(WebDriver driver) {
         super(driver);
     }
@@ -29,5 +32,9 @@ public class MessagePage extends AbstractPage {
         buttonConfirmForward.click();
         driver.close();
         driver.switchTo().window(tabs.get(0));
+    }
+
+    public boolean hasEmotion(){
+        return imgEmoticon.isEnabled();
     }
 }

@@ -19,4 +19,8 @@ public class MessagePageSteps extends AbstractSteps {
         messagePage.confirmRequestForward();
         return new MainPageSteps(driver);
     }
+
+    public boolean hasEmoticon(){
+        return messagePage.hasEmotion();
+    }
 }

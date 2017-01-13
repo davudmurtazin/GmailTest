@@ -19,7 +19,8 @@ public class ShouldSendMessageWithEmotion extends BaseTest {
     @Test
     public void testName() throws Exception {
         softAssert.assertFalse(mainPage.sendMessageWithEmotion(user1, 2)
-                .hasMessageWithEmoticons());
+                .openLastMessage(user1)
+                .hasEmoticon());
     }
 
     @AfterMethod

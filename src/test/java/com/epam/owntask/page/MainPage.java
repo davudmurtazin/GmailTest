@@ -61,7 +61,7 @@ public class MainPage extends AbstractPage{
     @FindBy(xpath = "//button[@class='a8v a8t a8t']")
     private WebElement buttonMoreEmoticons;
 
-    @FindAll(@FindBy( xpath = "//div[@class='wVboN']/button"))
+    @FindAll(@FindBy(xpath = "//div[@class='a8I']/div[1]/button"))
     private List<WebElement> allEmoticons;
 
     // logout---------------------
@@ -107,7 +107,6 @@ public class MainPage extends AbstractPage{
     public void markMessageAsSpam(User user){
         List<WebElement> elements = driver.findElements(By.xpath("//table[@class= 'F cf zt']/descendant-or-self::span[@email = '"+user.getLogin()+"']/parent::div/parent::td/preceding-sibling::td[@class='oZ-x3 xY']/div/div"));
         wait.waitForElementIsClickable(elements.get(0)).click();
-
         wait.waitForElementIsClickable(selectMoveTo).click();
         caseMoveToSpam.click();
     }
@@ -131,7 +130,8 @@ public class MainPage extends AbstractPage{
         } catch (AWTException e) {
             log.info(e.getMessage());
         }
-        buttonSendMessage.click();
+        wait.waitForElementIsClickable(buttonSendMessage).click();
+        ThreadSleep.waitElement(2000);
     }
 
     public void sendMessageWithAttachment(User user, String message, String filePath){
@@ -202,7 +202,9 @@ public class MainPage extends AbstractPage{
         return elements.isEmpty();
     }
 
-    public boolean hasMessageWithEmoticon(){
-       return false;
+    public void openLastMessage(User user){
+        driver.navigate().refresh();
+        List<WebElement> elements = driver.findElements(By.xpath("//table[@class='F cf zt']/descendant-or-self::div[@class='yW']/span[@email = '"+user.getLogin()+"']"));
+        wait.waitForElementIsClickable(elements.get(0)).click();
     }
 }
