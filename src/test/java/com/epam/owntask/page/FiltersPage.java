@@ -10,7 +10,7 @@ import org.openqa.selenium.support.FindBy;
  * Created by Davud_Murtazin on 12/24/2016.
  */
 public class FiltersPage extends AbstractPage {
-    //div[@class='nH f2 hCyPr']/div/div[5]/div/table[@class='cf']/tbody/tr[6]/td/span[1]
+
     @FindBy(xpath = "//td[@class='rG']/span[1]")
     private WebElement buttonCreateFilter;
 

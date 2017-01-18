@@ -19,17 +19,8 @@ public class ForwardingAndPOPMAPPage extends AbstractPage {
     @FindBy(xpath = "//button[@class='J-at1-auR']")
     private WebElement buttonNext;
 
-    @FindBy(xpath = "//input[@type='submit']")
-    private WebElement buttonConfirm;
-
-    @FindBy(xpath = "//div[@class='Kj-JD-K7 Kj-JD-K7-GIHV4']/span")
-    private WebElement fieldAccessAddedForward;
-
     @FindBy(xpath = "//div[@class='nH Tv1JD']/descendant-or-self::tr[1]/td[2]//descendant-or-self::table[2]//descendant-or-self::input")
     private WebElement checkBoxForwardCopyTo;
-
-    @FindBy(xpath = "//table[@class='cf']/descendant-or-self::span[@act='filter']")
-    private WebElement buttonFilterSettings;
 
     @FindBy(xpath = "//div[@class='nH Tv1JD']/descendant-or-self::button[@guidedhelpid='save_changes_button']")
     private WebElement buttonSaveChanges;

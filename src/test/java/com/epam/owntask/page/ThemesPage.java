@@ -76,6 +76,4 @@ public class ThemesPage extends AbstractPage {
             return false;
         }
     }
-
-
 }
