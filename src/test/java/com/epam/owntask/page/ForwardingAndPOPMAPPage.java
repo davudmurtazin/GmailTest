@@ -19,7 +19,7 @@ public class ForwardingAndPOPMAPPage extends AbstractPage {
     @FindBy(xpath = "//button[@class='J-at1-auR']")
     private WebElement buttonNext;
 
-    @FindBy(xpath = "//div[@class='nH Tv1JD']/descendant-or-self::tr[1]/td[2]//descendant-or-self::table[2]//descendant-or-self::input")
+    @FindBy(xpath = "//div[@class='nH Tv1JD']/descendant-or-self::tr[@class='r7'][position()=1]/descendant-or-self::td[@class='C6']/input")
     private WebElement checkBoxForwardCopyTo;
 
     @FindBy(xpath = "//div[@class='nH Tv1JD']/descendant-or-self::button[@guidedhelpid='save_changes_button']")
@@ -37,8 +37,6 @@ public class ForwardingAndPOPMAPPage extends AbstractPage {
 
     public void forwardCopyTo(){
         wait.waitForElementIsClickable(checkBoxForwardCopyTo).click();
-        ThreadSleep.waitElement(600);
-        buttonSaveChanges.click();
-        ThreadSleep.waitElement(2000);
+        wait.waitForElementIsClickable(buttonSaveChanges).click();
     }
 }

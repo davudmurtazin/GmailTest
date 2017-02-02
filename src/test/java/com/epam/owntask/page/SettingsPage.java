@@ -9,13 +9,13 @@ import org.openqa.selenium.support.FindBy;
  * Created by Davud_Murtazin on 11/25/2016.
  */
 public class SettingsPage extends AbstractPage {
-    @FindBy(xpath = "//div[@class='nH fY']/div[6]/a")
+    @FindBy(xpath = "//a[contains(text(),'Forwarding and POP/IMAP')]")
     private WebElement buttonForwardingAndPOPIMAP;
 
-    @FindBy(xpath = "//div[@class='nH fY']/div[5]/a")
+    @FindBy(xpath = "//a[contains(text(),'Filters and Blocked Addresses')]")
     private WebElement buttonFilter;
 
-    @FindBy(xpath = "//div[@class='nH fY']/div[10]/a")
+    @FindBy(xpath = "//a[contains(text(),'Themes')]")
     private WebElement buttonThemes;
 
     public SettingsPage(WebDriver driver) {

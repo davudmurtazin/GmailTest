@@ -30,10 +30,6 @@ public class FactoryDriver {
                 driver = createChromeDriver();
                 log.info("Chrome driver created");
                 break;
-            case FIREFOX:
-                driver = createFirefoxDriver();
-                log.info("Firefox driver created");
-                break;
             default:
                 driver = createFirefoxDriver();
                 log.info("Firefox driver created");

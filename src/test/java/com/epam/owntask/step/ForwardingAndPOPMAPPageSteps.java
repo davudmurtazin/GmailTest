@@ -18,9 +18,6 @@ public class ForwardingAndPOPMAPPageSteps extends AbstractSteps {
 
     public ConfirmPageSteps addForward(User user){
         log.info("Adding forward");
-        if(user.getLogin().isEmpty() && user.getPassword().isEmpty()){
-            log.info("Wrong params!");
-        }
         forwardingAndPOPMAPPage.addForward(user);
         return new ConfirmPageSteps(driver);
     }

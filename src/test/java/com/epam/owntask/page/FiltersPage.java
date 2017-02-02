@@ -11,7 +11,7 @@ import org.openqa.selenium.support.FindBy;
  */
 public class FiltersPage extends AbstractPage {
 
-    @FindBy(xpath = "//td[@class='rG']/span[1]")
+    @FindBy(xpath = "//td[@class='rG']/span/preceding-sibling::span")
     private WebElement buttonCreateFilter;
 
     @FindBy(xpath = "//div[@class='SK ZF-zT']/descendant-or-self::input[@class='ZH nr aQa']")
@@ -20,19 +20,19 @@ public class FiltersPage extends AbstractPage {
     @FindBy(xpath = "//input[@class='ZH nr aQf']")
     private WebElement inputLoginToWhom;
 
-    @FindBy(xpath = "//div[@class='ZZ']/div[7]/span[1]/input[1]")
+    @FindBy(xpath = "//div[@class='w-Nw']/span[@class='w-Pv ZG']/preceding-sibling::span/input[@type='checkbox']")
     private WebElement checkBoxHasAttach;
 
-    @FindBy(xpath = "//div[@class='ZZ']/div[9]/div[2]")
+    @FindBy(xpath = "//div[@class='T-I J-J5-Ji Zx aQe T-I-atl L3']/following-sibling::div")
     private WebElement buttonContinueCreatingFilter;
 
-    @FindBy(xpath = "//div[@class='nH']/div[6]/label")
+    @FindBy(xpath = "//label[contains(text(),'Delete it')]/preceding-sibling::input")
     private WebElement checkBoxDelete;
 
-    @FindBy(xpath = "//div[@class='nH']/div[8]/label")
+    @FindBy(xpath = "//label[contains(text(),'Always mark it as important')]/preceding-sibling::input")
     private WebElement checkBoxMarkAsImportant;
 
-    @FindBy(xpath = "//div[@class='ZZ']/div[5]/div")
+    @FindBy(xpath = "//div[contains(text(),'Create filter')]")
     private WebElement buttonEndCreateFilter;
 
     public FiltersPage(WebDriver driver) {
@@ -40,9 +40,7 @@ public class FiltersPage extends AbstractPage {
     }
 
     public void createNewFilter(User userFrom, User userTo){
-        ThreadSleep.waitElement(2000);
         wait.waitForElementIsClickable(buttonCreateFilter).click();
-        ThreadSleep.waitElement(3000);
         wait.waitForElementIsClickable(inputLoginFromWhom).sendKeys(userFrom.getLogin());
         wait.waitForElementIsClickable(inputLoginToWhom).sendKeys(userTo.getLogin());
         checkBoxHasAttach.click();

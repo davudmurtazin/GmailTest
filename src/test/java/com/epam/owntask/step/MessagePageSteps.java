@@ -21,6 +21,7 @@ public class MessagePageSteps extends AbstractSteps {
     }
 
     public boolean hasEmoticon(){
+        log.info("Check emoticons");
         return messagePage.hasEmotion();
     }
 }

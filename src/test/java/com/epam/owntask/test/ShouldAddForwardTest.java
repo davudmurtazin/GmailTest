@@ -40,7 +40,7 @@ public class ShouldAddForwardTest extends BaseTest{
                 .createNewFilter(user1,user2)
                 .logOutAfterLogInSeveralUsers()
                 .authorization(user1)
-                .sendMessageWithAttachment(user2, MESSAGE_TEXT, FILE_PATH)
+                .sendMessageWithAttachment(user2, MESSAGE_TEXT, FILE_NAME, SMALL_FILE_SIZE)
                 .sendMessage(user2,MESSAGE_TEXT)
                 .logOutAfterLogInSeveralUsers()
                 .authorization(user2)

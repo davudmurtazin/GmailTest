@@ -14,14 +14,14 @@ import java.io.IOException;
  * Created by Davud_Murtazin on 11/20/2016.
  */
 public class LoginPage extends AbstractPage{
-    //user name-----------
+    //user name
     @FindBy(css = "#Email")
     private WebElement loginNameField;
 
     @FindBy(css = "#next")
     private WebElement loginEnterButton;
 
-    //password-------------
+    //password
     @FindBy(css = "#Passwd")
     private WebElement passwordField;
 

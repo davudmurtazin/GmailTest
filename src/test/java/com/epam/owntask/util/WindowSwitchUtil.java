@@ -19,7 +19,6 @@ public class WindowSwitchUtil {
         for (String handle : driver.getWindowHandles()) {
             if(!handle.equalsIgnoreCase(currentWindow)){
                 driver.switchTo().window(handle);
-                ThreadSleep.waitElement(2500);
                 break;
             }
         }

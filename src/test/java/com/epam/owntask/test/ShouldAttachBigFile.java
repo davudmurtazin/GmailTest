@@ -20,7 +20,7 @@ public class ShouldAttachBigFile extends BaseTest {
 
     @Test
     public void testShouldAttachBigFile() throws Exception {
-        softAssert.assertFalse(mainPage.sendMessageWithBigFile(user1, MESSAGE_TEXT));
+        softAssert.assertFalse(mainPage.sendMessageWithBigFile(user1, MESSAGE_TEXT, FILE_NAME, BIG_FILE_SIZE));
     }
 
     @AfterMethod

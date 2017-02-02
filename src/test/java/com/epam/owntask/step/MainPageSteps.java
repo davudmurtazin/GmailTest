@@ -22,37 +22,25 @@ public class MainPageSteps extends AbstractSteps{
 
     public MainPageSteps sendMessage(User user, String message){
         log.info("Write message without attachment");
-        if( message.isEmpty() ){
-            log.info("Wrong params!");
-        }
         mainPage.sendMessage(user,message);
         return this;
     }
 
     public MainPageSteps sendMessageWithEmotion(User user, int countOfEmoticons){
         log.info("Write message with emoticon");
-        if( countOfEmoticons == 0){
-            log.info("Wrong params!");
-        }
         mainPage.sendMessageWithEmotion(user,countOfEmoticons);
         return this;
     }
 
-    public MainPageSteps sendMessageWithAttachment(User user, String message, String filePath){
+    public MainPageSteps sendMessageWithAttachment(User user, String message, String fileName, double fileSize){
         log.info("Write message with attachment");
-        if( message.isEmpty()){
-            log.info("Wrong params!");
-        }
-        mainPage.sendMessageWithAttachment(user, message, filePath);
+        mainPage.sendMessageWithAttachment(user, message, fileName, fileSize);
         return this;
     }
 
-    public boolean sendMessageWithBigFile(User user, String message){
+    public boolean sendMessageWithBigFile(User user, String message, String fileName, double fileSize){
         log.info("Write message with attaching big file");
-        if( message.isEmpty()){
-            log.info("Wrong params!");
-        }
-        return mainPage.sendMessageWithBigFile(user, message);
+        return mainPage.sendMessageWithBigFile(user, message, fileName, fileSize);
     }
 
     public MainPageSteps markMessageAsSpam(User user){
@@ -63,18 +51,12 @@ public class MainPageSteps extends AbstractSteps{
 
     public SpamPageSteps enterToSpamPage(String pageTitle){
         log.info("Enter to spam page");
-        if(pageTitle.isEmpty()){
-            log.info("Wrong params!");
-        }
         mainPage.enterToSpamPage(pageTitle);
         return new SpamPageSteps(driver);
     }
 
     public TrashPageSteps enterToTrashPage(String pageTitle){
         log.info("Enter to trash page");
-        if(pageTitle.isEmpty()){
-            log.info("Wrong params!");
-        }
         mainPage.enterToTrashPage(pageTitle);
         return new TrashPageSteps(driver);
     }
@@ -109,6 +91,7 @@ public class MainPageSteps extends AbstractSteps{
     }
 
     public MessagePageSteps openLastMessage(User user){
+        log.info("Open last message");
         mainPage.openLastMessage(user);
         return new MessagePageSteps(driver);
     }

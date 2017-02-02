@@ -14,11 +14,11 @@ import java.io.IOException;
 public class FileUtil {
     protected static final Logger log = LogManager.getRootLogger();
 
-    public static String createFile(){
-        File file = new File("text.txt");
+    public static String createFile(String fileName, double fileSize){
+        File file = new File(fileName);
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-            while (file.length() <= 30000000) {
+            while (file.length() <= fileSize) {
                 writer.write(String.valueOf(Double.MAX_VALUE));
                 writer.write("0123456789112312346547654");
                 writer.write("abcdefghijklnopqrstuvwxuz");

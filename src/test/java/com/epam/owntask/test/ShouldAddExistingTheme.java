@@ -21,7 +21,7 @@ public class ShouldAddExistingTheme extends BaseTest {
         softAssert.assertFalse(mainPage.enterToSettingsPage()
                 .enterToThemesPage()
                 .setTheme()
-                .couldSetBeachTheme());
+                .setBeachTheme());
 
     }
 

@@ -1,5 +1,6 @@
 package com.epam.owntask.page;
 
+import com.epam.owntask.util.FileUtil;
 import com.epam.owntask.util.RobotUtil;
 import com.epam.owntask.util.ThreadSleep;
 import org.openqa.selenium.WebDriver;
@@ -16,31 +17,33 @@ public class ThemesPage extends AbstractPage {
     @FindBy(xpath = "//a[@class='e NvzLyc']")
     private WebElement buttonSetTheme;
 
-    @FindBy(xpath = "//div[@class='Kj-JD-Jl a8Y']/div[4]")
+    @FindBy(xpath = "//div[contains(text(),'My Photos')]")
     private WebElement buttonYourPictures;
 
-    @FindBy(xpath = "//div[@class='Dm-Fs-Zb-Qh-Yb-ho']/div/div[3]/div")
+    @FindBy(xpath = "//div[@id=':7']/div")
     private WebElement buttonUploadPicture;
 
-    @FindBy(xpath = "//div[@class='Dm-Yx-qy Dm-Yx-uy']/div[4]/div")
+    @FindBy(xpath = "//div[@id=':t.select-files-button']/div")
     private WebElement buttonUploadFromComputer;
 
-    @FindBy(xpath = "//div[@class='Dm-Gs-ic Dm-Hs-Md Dm-mx-Hs']/div[4]")
+    @FindBy(xpath = "//div[@class='Dm-Gs-ic Dm-Hs-Md Dm-mx-Hs']/div[@aria-live='polite']")
     private WebElement textErrorMessage;
 
     @FindBy(xpath = "//iframe[@class='KA-JQ']")
     private WebElement frameThemeAdding;
 
-    @FindBy(xpath = "//div[@bgid='custom-10']/div[2]")
+    @FindBy(xpath = "//div[@bgid='custom-1']/img")
     private WebElement imgBeach;
+
+    private RobotUtil robotUtil;
 
     public ThemesPage(WebDriver driver) {
         super(driver);
+        robotUtil = new RobotUtil();
     }
 
     public void setTheme(){
         buttonSetTheme.click();
-        ThreadSleep.waitElement(1000);
     }
 
     public void enterMyPictures(){
@@ -49,18 +52,12 @@ public class ThemesPage extends AbstractPage {
         driver.switchTo().frame(frameThemeAdding);
     }
 
-    public void enterUploadPicture(String filePath){
+    public void enterUploadPicture(String fileName, double fileSize){
         wait.waitForElementIsClickable(buttonUploadPicture).click();
         wait.waitForElementIsClickable(buttonUploadFromComputer).click();
         switchUtil.switchWindow();
-        ThreadSleep.waitElement(4000);
-        try {
-            RobotUtil robotUtil = new RobotUtil(new Robot());
-            robotUtil.enterPathByRobot(filePath);
-        } catch (AWTException e) {
-            e.printStackTrace();
-        }
-        ThreadSleep.waitElement(4000);
+        String filePath = FileUtil.createFile(fileName, fileSize);
+        robotUtil.enterPathByRobot(filePath);
         switchUtil.switchWindow();
     }
 
@@ -68,7 +65,7 @@ public class ThemesPage extends AbstractPage {
         return wait.waitForElementIsClickable(textErrorMessage).isEnabled();
     }
 
-    public boolean couldSetBeachTheme(){
+    public boolean setBeachTheme(){
         if(imgBeach.isEnabled()){
             imgBeach.click();
             return true;

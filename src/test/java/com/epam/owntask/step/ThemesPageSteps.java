@@ -28,9 +28,9 @@ public class ThemesPageSteps extends AbstractSteps {
         return this;
     }
 
-    public ThemesPageSteps enterUploadPicture(String filePath){
+    public ThemesPageSteps enterUploadPicture(String fileName, double fileSize){
         log.info("Enter my pictures");
-        themesPage.enterUploadPicture(filePath);
+        themesPage.enterUploadPicture(fileName, fileSize);
         return this;
     }
 
@@ -39,8 +39,8 @@ public class ThemesPageSteps extends AbstractSteps {
         return themesPage.isWrongFileFormat();
     }
 
-    public boolean couldSetBeachTheme(){
+    public boolean setBeachTheme(){
         log.info("Check beach theme");
-        return themesPage.couldSetBeachTheme();
+        return themesPage.setBeachTheme();
     }
 }

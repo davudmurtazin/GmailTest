@@ -10,7 +10,7 @@ import org.openqa.selenium.support.FindBy;
 public class ConfirmPage extends AbstractPage {
     private String currentWindow = driver.getWindowHandle();
 
-    @FindBy(xpath = "//td[@align = 'left']/input[3]")
+    @FindBy(xpath = "//input[@type='submit']")
     private WebElement buttonContinue;
 
     @FindBy(xpath = "//div[@class = 'Kj-JD-Jl']/button[@class='J-at1-auR']")

@@ -22,7 +22,7 @@ public class ShouldAddTheme extends BaseTest {
                 .enterToThemesPage()
                 .setTheme()
                 .enterMyPictures()
-                .enterUploadPicture(FILE_PATH)
+                .enterUploadPicture(FILE_NAME,SMALL_FILE_SIZE)
                 .isWrongFileFormat());
     }
 

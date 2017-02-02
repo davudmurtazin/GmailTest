@@ -27,8 +27,9 @@ public abstract class BaseTest {
     protected static String TRASH_PAGE_TITLE;
     protected static String SPAM_PAGE_TITLE;
     protected static String MESSAGE_TEXT;
-    protected static String FILE_PATH;
-    protected static String PICTURE_PATH;
+    protected static String FILE_NAME;
+    protected static double BIG_FILE_SIZE;
+    protected static double SMALL_FILE_SIZE;
 
     @BeforeMethod
     public void setUp() throws Exception {
@@ -41,8 +42,9 @@ public abstract class BaseTest {
         TRASH_PAGE_TITLE = PropertyProvider.getProperty("trash_page_title");
         SPAM_PAGE_TITLE = PropertyProvider.getProperty("spam_page_title");
         MESSAGE_TEXT = PropertyProvider.getProperty("message_text");
-        FILE_PATH = PropertyProvider.getProperty("file_path");
-        PICTURE_PATH = PropertyProvider.getProperty("picture_path");
+        FILE_NAME = PropertyProvider.getProperty("file_name");
+        BIG_FILE_SIZE = Double.parseDouble(PropertyProvider.getProperty("big_file_size"));
+        SMALL_FILE_SIZE = Double.parseDouble(PropertyProvider.getProperty("small_file_size"));
     }
 
     @AfterMethod

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class MessagePage extends AbstractPage {
     private String currentWindow = driver.getWindowHandle();
 
-    @FindBy(xpath = "//div[@class='ii gt adP adO']/div/a[4]")
+    @FindBy(xpath = "//div[@class='ii gt adP adO']/div/a[@rel='noreferrer']")
     private WebElement linkConfirmForward;
 
     @FindBy(xpath = "//form/p/input")

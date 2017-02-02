@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class MainPage extends AbstractPage{
     //select message and move it to spam
-    @FindBy(xpath = "//div[@class = 'G-tF']/div[3]/div[1]")
+    @FindBy(xpath = "//div[@class = 'G-tF']//div[@aria-label='Move to']")
     private WebElement selectMoveTo;
 
     @FindBy(xpath = "//div[@id=':1i4']/div")
@@ -46,7 +46,7 @@ public class MainPage extends AbstractPage{
     @FindBy(xpath="//div[@class='Am Al editable LW-avf']")
     private WebElement inputMessageText;
 
-    @FindBy(xpath = "//td[@class = 'gU Up']/div/div[2]")
+    @FindBy(xpath = "//td[@class = 'gU Up']/div/div[@class='T-I J-J5-Ji aoO T-I-atl L3']")
     private WebElement buttonSendMessage;
 
     @FindBy(xpath = "//div[@class='a1 aaA aMZ']")
@@ -68,7 +68,7 @@ public class MainPage extends AbstractPage{
     @FindBy(xpath = "//a[@class = 'gb_b gb_db gb_R']/span")
     private WebElement iconLogout;
 
-    @FindBy(xpath = "//div[@class='gb_xb']/div[2]/a")
+    @FindBy(xpath = "//a[@id='gb_71']")
     private WebElement buttonLogout;
 
     @FindBy(xpath = "//a[@id='account-chooser-link']")
@@ -78,14 +78,20 @@ public class MainPage extends AbstractPage{
     private WebElement buttonNewUser;
 
     //enter to settings page---------------
-    @FindBy(xpath = "//div[@class='T-I J-J5-Ji ash T-I-ax7 L3']/div[1]")
+    @FindBy(xpath = "//div[@class='T-I J-J5-Ji ash T-I-ax7 L3']/div/preceding-sibling::div")
     private WebElement iconSettings;
 
     @FindBy(xpath = "//div[@class='J-M asi aYO jQjAxd']/descendant-or-self::div[@class='J-N aMS']/div")
     private WebElement selectSettings;
 
+    @FindAll(@FindBy(xpath = "//table[@class='F cf zt']/descendant-or-self::div[@class='yW']/span[@email = 'forwarding-noreply@google.com']"))
+    private List<WebElement> allMessagesFromGmail;
+
+    private RobotUtil robotUtil;
+
     public MainPage(WebDriver driver) {
         super(driver);
+        robotUtil = new RobotUtil();
     }
 
     public void enterToSpamPage(String pageTitle){
@@ -95,7 +101,6 @@ public class MainPage extends AbstractPage{
 
     public void enterToSettingsPage(){
         wait.waitForElementIsClickable(iconSettings).click();
-        ThreadSleep.waitElement(1000);
         wait.waitForElementIsClickable(selectSettings).click();
     }
 
@@ -124,60 +129,43 @@ public class MainPage extends AbstractPage{
         buttonEmoticons.click();
         buttonMoreEmoticons.click();
         driver.switchTo().activeElement();
-        try {
-            RobotUtil robotUtil = new RobotUtil(new Robot());
-            robotUtil.addEmoticonsByRobot(allEmoticons, countOfEmotions, wait);
-        } catch (AWTException e) {
-            log.info(e.getMessage());
-        }
+        robotUtil.addEmoticonsByRobot(allEmoticons, countOfEmotions, wait);
         wait.waitForElementIsClickable(buttonSendMessage).click();
-        ThreadSleep.waitElement(2000);
     }
 
-    public void sendMessageWithAttachment(User user, String message, String filePath){
+    public void sendMessageWithAttachment(User user, String message, String fileName, double fileSize){
         String currentWindow = driver.getWindowHandle();
         buttonWriteNewMessage.click();
         inputLoginToSend.sendKeys(user.getLogin());
         inputMessageText.sendKeys(message);
         buttonAddAttachment.click();
         switchUtil.switchWindow();
-        ThreadSleep.waitElement(4000);
-        try {
-            RobotUtil robotUtil = new RobotUtil(new Robot());
-            robotUtil.enterPathByRobot(filePath);
-        } catch (AWTException e) {
-            e.printStackTrace();
-        }
-        ThreadSleep.waitElement(4000);
+        String filePath = FileUtil.createFile(fileName, fileSize);
+        robotUtil.enterPathByRobot(filePath);
         driver.switchTo().window(currentWindow);
         wait.waitForElementIsClickable(inputSubject).sendKeys(message);
         wait.waitForElementIsClickable(buttonSendMessage).click();
     }
 
-    public boolean sendMessageWithBigFile(User user, String message){
+    public boolean sendMessageWithBigFile(User user, String message, String fileName, double fileSize){
         String currentWindow = driver.getWindowHandle();
         buttonWriteNewMessage.click();
         inputLoginToSend.sendKeys(user.getLogin());
         wait.waitForElementIsClickable(inputMessageText).sendKeys(message);
         buttonAddAttachment.click();
         switchUtil.switchWindow();
-        String filePath = FileUtil.createFile();
-        try {
-            RobotUtil robotUtil = new RobotUtil(new Robot());
-            robotUtil.enterPathByRobot(filePath);
-        } catch (AWTException e) {
-            e.printStackTrace();
-        }
+        String filePath = FileUtil.createFile(fileName, fileSize);
+        //This thread sleep is for creating file(takes a lot of time)
+        ThreadSleep.waitElement(5000);
+        robotUtil.enterPathByRobot(filePath);
         driver.switchTo().window(currentWindow);
         FileUtil.deleteFile(filePath);
         return wait.waitForElementIsClickable(linkIsBigFile).isEnabled();
     }
 
     public LoginPageSteps logOutAfterLogInOneUser(){
-        ThreadSleep.waitElement(2000);
-        iconLogout.click();
-        ThreadSleep.waitElement(1000);
-        buttonLogout.click();
+        wait.waitForElementIsClickable(iconLogout).click();
+        wait.waitForElementIsClickable(buttonLogout).click();
         linkLoginNewUser.click();
         buttonNewUser.click();
         return new LoginPageSteps(driver);
@@ -185,15 +173,13 @@ public class MainPage extends AbstractPage{
 
     public LoginPageSteps logOutAfterLogInSeveralUsers(){
         wait.waitForElementIsClickable(iconLogout).click();
-        ThreadSleep.waitElement(1000);
-        buttonLogout.click();
+        wait.waitForElementIsClickable(buttonLogout).click();
         wait.waitForElementIsClickable(buttonNewUser).click();
         return new LoginPageSteps(driver);
     }
 
     public MessagePage openConfirmForwardMessage(){
-        List<WebElement> elements = driver.findElements(By.xpath("//table[@class='F cf zt']/descendant-or-self::div[@class='yW']/span[@email = 'forwarding-noreply@google.com']"));
-        wait.waitForElementIsClickable(elements.get(0)).click();
+        wait.waitForElementIsClickable(allMessagesFromGmail.get(0)).click();
         return new MessagePage(driver);
     }
 
