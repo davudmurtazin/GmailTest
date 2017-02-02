@@ -28,8 +28,7 @@ public class PropertyProvider {
                 properties.load(fis);
                 fis.close();
             } catch (IOException e) {
-                log.info(e.getMessage());
-                System.out.println("Exception's happened trying to load props from: " + fileName);
+                log.info("Exception's happened trying to load props from: " + fileName + e.getMessage());
             }
         }
     }

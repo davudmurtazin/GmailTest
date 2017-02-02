@@ -28,7 +28,7 @@ public class RobotUtil {
             robot.keyRelease(KeyEvent.VK_V);
             robot.keyPress(KeyEvent.VK_ENTER);
         } catch (AWTException e) {
-            log.info("Could not create robot!");
+            log.info("Could not create robot or could not do some actions!");
         }
     }
 
@@ -42,7 +42,7 @@ public class RobotUtil {
                 wait.waitForElementIsClickable(allEmoticons.get(indexOfEmotion)).click();
             }
         } catch (AWTException e) {
-            log.info("Could not create robot!");
+            log.info("Could not create robot or could not do some actions!");
         }
     }
 }

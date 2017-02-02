@@ -24,7 +24,7 @@ public class FileUtil {
                 writer.write("abcdefghijklnopqrstuvwxuz");
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            log.info("Could not create file or write to file! " + e.getMessage());
         }
         return file.getAbsolutePath();
     }
